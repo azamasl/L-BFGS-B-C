@@ -228,7 +228,9 @@ static integer c__1 = 1;
                      Ciyou Zhu
   in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
 
-
+   Modified by
+                    Azam Asl
+  to eliminate goto and pass func/grad evaluation function to the linesearch routine.
   ************
   */
 /* -jlm-jn */
