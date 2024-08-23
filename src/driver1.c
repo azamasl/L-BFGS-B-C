@@ -192,7 +192,39 @@
     -------------------------------------------------------------- 
     */
 
+//double    (*valgrad) (double *, double *, INT), /* f = valgrad (g, x, n),
+double evaluate( double*g, double *x, integer n  ){
+  double d1, d2, t1, t2;
+  integer  i, i1;
 
+  d1 = x[0] - 1.;
+  double f = d1 * d1 * .25;
+  i1 = n;
+  for (i = 2; i <= i1; ++i) {
+    /* Computing 2nd power */
+    d2 = x[i - 2];
+    /* Computing 2nd power */
+    d1 = x[i - 1] - d2 * d2;
+    f += d1 * d1;
+  }
+  f *= 4.;
+  /*        Compute gradient g for the sample problem. */
+  /* Computing 2nd power */
+  d1 = x[0];
+  t1 = x[1] - d1 * d1;
+  g[0] = (x[0] - 1.) * 2. - x[0] * 16. * t1;
+  i1 = n - 1;
+  for (i = 2; i <= i1; ++i) {
+    t2 = t1;
+    /* Computing 2nd power */
+    d1 = x[i - 1];
+    t1 = x[i] - d1 * d1;
+    g[i - 1] = t2 * 8. - x[i - 1] * 16. * t1;
+    /* L22: */
+  }
+  g[n - 1] = t1 * 8.;
+  return f;
+}
 
 /* Main program */ 
 //int MAIN__(void)
@@ -200,11 +232,11 @@ int main(void)
 {
 
     /* System generated locals */
-    integer i__1;
-    double d__1, d__2;
+    integer i1;
+    double d1, d2;
     /* Local variables */
     static double f, g[1024];
-    static integer i__;
+    static integer i;
     static double l[1024];
     static integer m, n;
     static double u[1024], x[1024], t1, t2, wa[43251];
@@ -238,7 +270,7 @@ int main(void)
  */
 
 /*     We wish to have output at every iteration. */
-    iprint = 1; 
+    iprint = 2;
 /*     iprint = 101; */
 /*     We specify the tolerances in the stopping criteria. */
     factr = 1e7;
@@ -252,23 +284,23 @@ int main(void)
 /*                    l   specifies the lower bounds, */
 /*                    u   specifies the upper bounds. */
 /*     First set bounds on the odd-numbered variables. */
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; i__ += 2) {
-        nbd[i__ - 1] = 2;
-        l[i__ - 1] = 1.;
-        u[i__ - 1] = 100.;
+    i1 = n;
+    for (i = 1; i <= i1; i += 2) {
+        nbd[i - 1] = 2;
+        l[i - 1] = 1.;
+        u[i - 1] = 100.;
     }
     /*     Next set bounds on the even-numbered variables. */
-    i__1 = n;
-    for (i__ = 2; i__ <= i__1; i__ += 2) {
-        nbd[i__ - 1] = 2;
-        l[i__ - 1] = -100.;
-        u[i__ - 1] = 100.;
+    i1 = n;
+    for (i = 2; i <= i1; i += 2) {
+        nbd[i - 1] = 2;
+        l[i - 1] = -100.;
+        u[i - 1] = 100.;
     }
     /*     We now define the starting point. */
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-        x[i__ - 1] = 3.;
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
+        x[i - 1] = 3.;
         /* L14: */
     }
     printf("     Solving sample problem (Rosenbrock test fcn).\n");
@@ -279,56 +311,18 @@ int main(void)
     *task = (integer)START;
 /*     s_copy(task, "START", (ftnlen)60, (ftnlen)5); */
     /*        ------- the beginning of the loop ---------- */
-L111:
+   // L111:
     /*     This is the call to the L-BFGS-B code. */
-    setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, wa, iwa, task, &
-            iprint, csave, lsave, isave, dsave);
-/*     if (s_cmp(task, "FG", (ftnlen)2, (ftnlen)2) == 0) { */
-    if ( IS_FG(*task) ) {
-        /*        the minimization routine has returned to request the */
-        /*        function f and gradient g values at the current x. */
-        /*        Compute function value f for the sample problem. */
-        /* Computing 2nd power */
-        d__1 = x[0] - 1.;
-        f = d__1 * d__1 * .25;
-        i__1 = n;
-        for (i__ = 2; i__ <= i__1; ++i__) {
-            /* Computing 2nd power */
-            d__2 = x[i__ - 2];
-            /* Computing 2nd power */
-            d__1 = x[i__ - 1] - d__2 * d__2;
-            f += d__1 * d__1;
-        }
-        f *= 4.;
-        /*        Compute gradient g for the sample problem. */
-        /* Computing 2nd power */
-        d__1 = x[0];
-        t1 = x[1] - d__1 * d__1;
-        g[0] = (x[0] - 1.) * 2. - x[0] * 16. * t1;
-        i__1 = n - 1;
-        for (i__ = 2; i__ <= i__1; ++i__) {
-            t2 = t1;
-            /* Computing 2nd power */
-            d__1 = x[i__ - 1];
-            t1 = x[i__] - d__1 * d__1;
-            g[i__ - 1] = t2 * 8. - x[i__ - 1] * 16. * t1;
-            /* L22: */
-        }
-        g[n - 1] = t1 * 8.;
-        /*          go back to the minimization routine. */
-        goto L111;
-    }
+    setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, wa, iwa, task, &iprint, csave, lsave, isave, dsave, evaluate);
 
-/*     if (s_cmp(task, "NEW_X", (ftnlen)5, (ftnlen)5) == 0) { */
-    if ( *task==NEW_X ) {
-        goto L111;
-    }
-    /*        the minimization routine has returned with a new iterate, */
-    /*         and we have opted to continue the iteration. */
-    /*           ---------- the end of the loop ------------- */
-    /*     If task is neither FG nor NEW_X we terminate execution. */
-    //s_stop("", (ftnlen)0);
+//    if ( IS_FG(*task) ) {
+//        f = evaluate(g, x , n);
+//        goto L111;
+//    }
+//
+//    if ( *task==NEW_X ) {
+//        goto L111;
+//    }
     return 0;
 } /* MAIN__ */
 
-///* Main program alias */ int driver_ () { MAIN__ (); return 0; }

@@ -1,24 +1,8 @@
 # L-BFGS-B-C
-L-BFGS-B, converted from Fortran to C with Matlab wrapper
 
-This is a C version of the well-known [L-BFGS-B code](http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html), version 3.0.
+The C version of the well-known [L-BFGS-B code](http://users.eecs.northwestern.edu/~nocedal/lbfgsb.html), version 3.0.
 
-It was created with f2c, then hand-coded to remove dependences on the f2c library
-
-There is a Matlab mex wrapper (mex files and .m files, with example). This was the main
-motivation for converting to C, since compiling C and Fortran from Matlab is a pain,
-especially since many standard users don't have a Fortran compiler (especially for Windows).
-
-This is an update of my previous wrapper that was on the [Mathworks file-exchange](http://www.mathworks.com/matlabcentral/fileexchange/35104-lbfgsb--l-bfgs-b--mex-wrapper) from 2012--2015.  This code is completely re-done. I no longer post on the mathworks file-exchange since they have a restrictive license that, e.g., prevents one from using that code with a Matlab alternative such as [Octave](https://www.gnu.org/software/octave/). This current code has not been tested under Octave but there is no reason why it should not be able to work without major modification.  That file-exchange code is available ([![View L-BFGS-B-C on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/35104-l-bfgs-b-c)), but as of v1.7 it links directly to this github site.
-
-
-More info on the algorithm is available at the [L-BFGS-B wikipedia page](http://en.wikipedia.org/wiki/L-BFGS-B:_Optimization_subject_to_simple_bounds). References for the algorithm:
-
-* R. H. Byrd, P. Lu and J. Nocedal. A Limited Memory Algorithm for Bound Constrained Optimization, (1995), SIAM Journal on Scientific and Statistical Computing , 16, 5, pp. 1190-1208.
-* C. Zhu, R. H. Byrd and J. Nocedal. L-BFGS-B: Algorithm 778: L-BFGS-B, FORTRAN routines for large scale bound constrained optimization (1997), ACM Transactions on Mathematical Software, Vol 23, Num. 4, pp. 550 - 560.
-* J.L. Morales and J. Nocedal. L-BFGS-B: Remark on Algorithm 778: L-BFGS-B, FORTRAN routines for large scale bound constrained optimization (2011), ACM Transactions on Mathematical Software, Vol 38, Num. 1.
-
-There are wrappers for L-BFGS-B in other languages (most link to one of the 2.x versions, but some, like this [R package](http://cran.r-project.org/web/packages/lbfgsb3/), link to the current version 3.0).
+TO BE CONTINUED
 
 # Installation
 
@@ -36,7 +20,8 @@ The L-BFGS-B website requests that you cite them. From their website:
 It would be nice to cite this website as well since it took a significant amount of work...
 
 # Authors
-This C version and Matlab wrapper are written by [Stephen Becker](http://amath.colorado.edu/faculty/becker/), stephen.becker@colorado.edu
+This is a fork of
+C version and Matlab wrapper are written by [Stephen Becker](http://amath.colorado.edu/faculty/becker/), stephen.becker@colorado.edu
 
 The L-BFGS-B algorithm was written in the 1990s (mainly 1994, some revisions 1996) by Ciyou Zhu (in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal)
 
