@@ -511,19 +511,20 @@ static double c_b7 = 0.;
     in collaboration with R.H. Byrd, P. Lu-Chen and J. Nocedal.
     */
 
-/* Subroutine */ int mainlb(integer *n, integer *m, double *x,
-                            double *l, double *u, integer *nbd, double *f, double
-                            *g, double *factr, double *pgtol, double *ws, double *
-wy, double *sy, double *ss, double *wt, double *wn,
-                            double *snd, double *z__, double *r__, double *d__,
-                            double *t, double *xp, double *wa, integer *index,
-                            integer *iwhere, integer *indx2, integer *task, integer *iprint,
-                            integer *csave, logical *lsave, integer *isave, double *dsave,
-                            double      (*eval) (double *, double *, integer) /* f = eval (g,x,n)*/
+int mainlb(integer *n, integer *m, double *x,
+              double *l, double *u, integer *nbd, double *f, double
+              *g, double *factr, double *pgtol, double *ws, double *
+              wy, double *sy, double *ss, double *wt, double *wn,
+              double *snd, double *z__, double *r__, double *d__,
+              double *t, double *xp, double *wa, integer *index,
+              integer *iwhere, integer *indx2, integer *task, integer *iprint,
+              integer *csave, logical *lsave, integer *isave, double *dsave,
+              double      (*eval) (double *, double *, integer)
 ) /*(ftnlen ) */
 /* 	task_len, ftnlen csave_len) */
 {
   //TODO: turne max_iter, max_ls to param
+  //TODO are dsave, lsave isave etc necessary anymore?
   integer max_iter = 1000;
   integer max_ls = 20;
   //printf("beginning of main : task = %5ld \n", *task);
@@ -679,57 +680,6 @@ wy, double *sy, double *ss, double *wt, double *wn,
     /*        The end of the initialization. */
   } else {
     /* restore local variables. */
-    prjctd = lsave[1];
-    cnstnd = lsave[2];
-    boxed = lsave[3];
-    updatd = lsave[4];
-    nintol = isave[1];
-    itfile = isave[3];
-    iback = isave[4];
-    nskip = isave[5];
-    head = isave[6];
-    col = isave[7];
-    itail = isave[8];
-    iter = isave[9];
-    iupdat = isave[10];
-    nseg = isave[12];
-    nfgv = isave[13];
-    info = isave[14];
-    ifun = isave[15];
-    iword = isave[16];
-    nfree = isave[17];
-    nact = isave[18];
-    ileave = isave[19];
-    nenter = isave[20];
-    theta = dsave[1];
-    fold = dsave[2];
-    tol = dsave[3];
-    dnorm = dsave[4];
-    epsmch = dsave[5];
-    cpu1 = dsave[6];
-    cachyt = dsave[7];
-    sbtime = dsave[8];
-    lnscht = dsave[9];
-    time1 = dsave[10];
-    gd = dsave[11];
-    stpmx = dsave[12];
-    sbgnrm = dsave[13];
-    stp = dsave[14];
-    gdold = dsave[15];
-    dtd = dsave[16];
-    /*        After returning from the driver go to the point where execution */
-    /*        is to resume. */
-
-//    if (*task == FG_LN) {
-//      goto L666;
-//    }
-//    if (*task == NEW_X) {
-//      goto L777;
-//    }
-//    if (*task == FG_ST) {
-//      goto L111;
-//    }
-
     if (IS_STOP(*task)) {
       if (*task == STOP_CPU) {
         /*    restore the previous iterate. */
@@ -749,10 +699,6 @@ wy, double *sy, double *ss, double *wt, double *wn,
   }
   /*     Compute f0 and g0. */
   *task = FG_START;
-  /*    return to the driver to calculate f and g; reenter at 111. */
-  //goto L1000;
-  /*     Save local variables. */
-
   *f = eval(&g[1], &x[1], *n);
   //*f = eval(g, x, *n);
   L111:
