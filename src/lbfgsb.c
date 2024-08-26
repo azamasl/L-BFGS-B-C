@@ -523,6 +523,7 @@ wy, double *sy, double *ss, double *wt, double *wn,
 ) /*(ftnlen ) */
 /* 	task_len, ftnlen csave_len) */
 {
+  //TODO: turne max_iter, max_ls to param
   integer max_iter = 1000;
   integer max_ls = 20;
   //printf("beginning of main : task = %5ld \n", *task);
@@ -751,44 +752,7 @@ wy, double *sy, double *ss, double *wt, double *wn,
   /*    return to the driver to calculate f and g; reenter at 111. */
   //goto L1000;
   /*     Save local variables. */
-  lsave[1] = prjctd;
-  lsave[2] = cnstnd;
-  lsave[3] = boxed;
-  lsave[4] = updatd;
-  isave[1] = nintol;
-  isave[3] = itfile;
-  isave[4] = iback;
-  isave[5] = nskip;
-  isave[6] = head;
-  isave[7] = col;
-  isave[8] = itail;
-  isave[9] = iter;
-  isave[10] = iupdat;
-  isave[12] = nseg;
-  isave[13] = nfgv;
-  isave[14] = info;
-  isave[15] = ifun;
-  isave[16] = iword;
-  isave[17] = nfree;
-  isave[18] = nact;
-  isave[19] = ileave;
-  isave[20] = nenter;
-  dsave[1] = theta;
-  dsave[2] = fold;
-  dsave[3] = tol;
-  dsave[4] = dnorm;
-  dsave[5] = epsmch;
-  dsave[6] = cpu1;
-  dsave[7] = cachyt;
-  dsave[8] = sbtime;
-  dsave[9] = lnscht;
-  dsave[10] = time1;
-  dsave[11] = gd;
-  dsave[12] = stpmx;
-  dsave[13] = sbgnrm;
-  dsave[14] = stp;
-  dsave[15] = gdold;
-  dsave[16] = dtd;
+
   *f = eval(&g[1], &x[1], *n);
   //*f = eval(g, x, *n);
   L111:
@@ -813,7 +777,7 @@ wy, double *sy, double *ss, double *wt, double *wn,
 
   /* ----------------- the beginning of the loop -------------------------- */
   while ( iter < max_iter ) {
-    L222:
+    //L222:
     if (*iprint >= 99) {
       printf("ITERATION %5ld\n", i__1);
     }
@@ -824,7 +788,6 @@ wy, double *sy, double *ss, double *wt, double *wn,
       dcopy(n, &x[1], &c__1, &z__[1], &c__1);
       wrk = updatd;
       nseg = 0;
-      //goto L333;
     } else {
       /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
 
@@ -848,7 +811,6 @@ wy, double *sy, double *ss, double *wt, double *wn,
         updatd = FALSE_;
         timer(&cpu2);
         cachyt = cachyt + cpu2 - cpu1;
-        //goto L222;
         continue;
       }
       timer(&cpu2);
@@ -860,7 +822,7 @@ wy, double *sy, double *ss, double *wt, double *wn,
           wrk, &updatd, &cnstnd, iprint, &iter);
       nact = *n - nfree;
     }
-    L333:
+    //L333:
     /*     If there are no free variables or B=theta*I, then */
     /*    skip the subspace minimization. */
     if (nfree != 0 && col != 0) {
@@ -915,8 +877,7 @@ wy, double *sy, double *ss, double *wt, double *wn,
              &wa[1],
              &index[1],
              &theta,
-             &
-                 col,
+             &col,
              &head,
              &nfree,
              &cnstnd,
@@ -973,7 +934,8 @@ wy, double *sy, double *ss, double *wt, double *wn,
                d__[1], &r__[1], &t[1], &z__[1], &stp, &dnorm, &dtd, &xstep, &
                stpmx, &iter, &ifun, &iback, &nfgv, &info, task, &boxed, &cnstnd,
            csave, &isave[22], iprint, &dsave[17], max_ls, eval); /* (ftnlen)60, (ftnlen)60); */
-    if (info != 0 || iback >= 20) {
+    //TODO: is iback >=max_ls still needed?
+    if (info != 0 || iback >= max_ls) {
       /*          restore the previous iterate. */
       dcopy(n, &t[1], &c__1, &x[1], &c__1);
       dcopy(n, &r__[1], &c__1, &g[1], &c__1);

@@ -72,7 +72,6 @@ ctask, integer *isave, integer *iprint, double *dsave,
   --isave;
   --dsave;
 
-
   *dtd = ddot(n, &d__[1], &c__1, &d__[1], &c__1);
   *dnorm = sqrt(*dtd);
   /*     Determine the maximum step length. */
@@ -119,7 +118,6 @@ ctask, integer *isave, integer *iprint, double *dsave,
   *iback = 0;
   *ctask = START;
 
-
   //L556:
   /* Function Body */
  integer ls_iter = 0;
@@ -136,11 +134,9 @@ ctask, integer *isave, integer *iprint, double *dsave,
        return 0;
      }
    }
-   //printf("            initial stp = %5e \n", *stp);
+
    dcsrch(f, gd, stp, &c_b14, &c_b15, &c_b16, &c_b17, stpmx, ctask, &isave[1], &dsave[1]);/* (ftnlen)60);*/
    *xstep = *stp * *dnorm;
-   //printf("inside ls, task = %5ld \n", *task);
-   //printf("inside ls, ctask = %5ld \n", ctask);
 
    if (!(IS_WARNING(*ctask)) && !(IS_CONVERGED(*ctask))) {
      *task = FG_LNSRCH;
@@ -153,13 +149,10 @@ ctask, integer *isave, integer *iprint, double *dsave,
        i__1 = *n;
        for (i__ = 1; i__ <= i__1; ++i__) {
          x[i__] = *stp * d__[i__] + t[i__];
-         /* L41: */
        }
      }
      *f = eval(&g[1], &x[1], *n);
    } else {
-     //printf("nfgv = %5ld \n", *nfgv);
-     //printf("final stp = %5e \n", *stp);
      *task = NEW_X;
      return 0;
    }
@@ -167,5 +160,3 @@ ctask, integer *isave, integer *iprint, double *dsave,
  }
   return 0;
 } /* lnsrlb */
-
-/* ======================= The end of lnsrlb ============================= */
