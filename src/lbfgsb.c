@@ -237,66 +237,73 @@ static integer c__1 = 1;
   /* Parameter adjustments */
 /* Subroutine */ int setulb(integer *n, integer *m, double *x,
                             double *l, double *u, integer *nbd, double *f, double
-                            *g, double *factr, double *pgtol, double *wa, integer *
-iwa, integer *task, integer *iprint, integer *csave, logical *lsave,
-                            integer *isave, double *dsave,
-                            double      (*eval) (double *, double *, integer) /* f = eval (g,x,n)*/
-) /* ftnlen task_len, ftnlen csave_len) */
-{
+                            *g, double *factr, double *pgtol, integer *iprint,
+                            double      (*eval) (double *, double *, integer)
+){
+
+  /*     static char task[60]; */
+  static integer taskValue;
+  static integer *task=&taskValue; /* must initialize !! */
+  static integer csaveValue;
+  static integer *csave=&csaveValue;
+  static double dsave[29];
+  static integer isave[44];
+  static logical lsave[4];
+  static double wa[43251];
+  static integer iwa[3072];
+
+
   /* System generated locals */
   integer i__1;
-
-
   /* Local variables */
-  static integer ld, lr, lt, lz, lwa, lwn, lss, lxp, lws, lwt, lsy, lwy,
-      lsnd;
-  --iwa;
+  static integer ld, lr, lt, lz, lwa, lwn, lss, lxp, lws, lwt, lsy, lwy, lsnd;
+  //--iwa;
   --g;
   --nbd;
   --u;
   --l;
   --x;
-  --wa;
-  --lsave;
-  --isave;
-  --dsave;
+//  --wa;
+//  --lsave;
+//  --isave;
+//  --dsave;
 
   /* Function Body */
-  if ( *task == START ) {
-    isave[1] = *m * *n;
-    /* Computing 2nd power */
-    i__1 = *m;
-    isave[2] = i__1 * i__1;
-    /* Computing 2nd power */
-    i__1 = *m;
-    isave[3] = i__1 * i__1 << 2;
-    isave[4] = 1;
-    /* ws      m*n */
-    isave[5] = isave[4] + isave[1];
-    /* wy      m*n */
-    isave[6] = isave[5] + isave[1];
-    /* wsy     m**2 */
-    isave[7] = isave[6] + isave[2];
-    /* wss     m**2 */
-    isave[8] = isave[7] + isave[2];
-    /* wt      m**2 */
-    isave[9] = isave[8] + isave[2];
-    /* wn      4*m**2 */
-    isave[10] = isave[9] + isave[3];
-    /* wsnd    4*m**2 */
-    isave[11] = isave[10] + isave[3];
-    /* wz      n */
-    isave[12] = isave[11] + *n;
-    /* wr      n */
-    isave[13] = isave[12] + *n;
-    /* wd      n */
-    isave[14] = isave[13] + *n;
-    /* wt      n */
-    isave[15] = isave[14] + *n;
-    /* wxp     n */
-    isave[16] = isave[15] + *n;
-    /* wa      8*m */
-  }
+  *task = START;
+  isave[1] = *m * *n;
+  /* Computing 2nd power */
+  i__1 = *m;
+  isave[2] = i__1 * i__1;
+  /* Computing 2nd power */
+  i__1 = *m;
+  isave[3] = i__1 * i__1 << 2;
+  isave[4] = 1;
+  /* ws      m*n */
+  isave[5] = isave[4] + isave[1];
+  /* wy      m*n */
+  isave[6] = isave[5] + isave[1];
+  /* wsy     m**2 */
+  isave[7] = isave[6] + isave[2];
+  /* wss     m**2 */
+  isave[8] = isave[7] + isave[2];
+  /* wt      m**2 */
+  isave[9] = isave[8] + isave[2];
+  /* wn      4*m**2 */
+  isave[10] = isave[9] + isave[3];
+  /* wsnd    4*m**2 */
+  isave[11] = isave[10] + isave[3];
+  /* wz      n */
+  isave[12] = isave[11] + *n;
+  /* wr      n */
+  isave[13] = isave[12] + *n;
+  /* wd      n */
+  isave[14] = isave[13] + *n;
+  /* wt      n */
+  isave[15] = isave[14] + *n;
+  /* wxp     n */
+  isave[16] = isave[15] + *n;
+  /* wa      8*m */
+
   lws = isave[4];
   lwy = isave[5];
   lsy = isave[6];

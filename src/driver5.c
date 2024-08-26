@@ -13,9 +13,6 @@ double evaluate( double    *g, double    *x, integer    n){
 }
 
 
-
-/* Main program */
-//int MAIN__(void)
 int main(void){
   /* System generated locals */
   integer i1;
@@ -25,20 +22,11 @@ int main(void){
   static integer i;
   static double l[1024];
   static integer m, n;
-  static double u[1024], x[1024], t1, t2, wa[43251];
-  static integer nbd[1024], iwa[3072];
-/*     static char task[60]; */
-  static integer taskValue;
-  static integer *task=&taskValue; /* must initialize !! */
-/*      http://stackoverflow.com/a/11278093/269192 */
-  static double factr;
-/*     static char csave[60]; */
-  static integer csaveValue;
-  static integer *csave=&csaveValue;
-  static double dsave[29];
-  static integer isave[44];
-  static logical lsave[4];
+  static double u[1024], x[1024], t1, t2;
+  static integer nbd[1024];
+
   static double pgtol;
+  static double factr;
   static integer iprint;
 
 /*     We wish to have output at every iteration. */
@@ -56,24 +44,7 @@ int main(void){
     x[i - 1] = 1.;
   }
 
-  /*     We start the iteration by initializing task. */
-
-  *task = (integer)START;
-/*     s_copy(task, "START", (ftnlen)60, (ftnlen)5); */
-  /*        ------- the beginning of the loop ---------- */
-  //L111:
-  /*     This is the call to the L-BFGS-B code. */
-  setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, wa, iwa, task, &iprint, csave, lsave, isave, dsave,evaluate);// evaluate);
-
-//  if ( IS_FG(*task) ) {
-//    //f = evaluate(g, x , n);
-//    f = myvalgrad(g, x, n);
-//    goto L111;
-//  }
-//
-//  if ( *task==NEW_X ) {
-//    goto L111;
-//  }
+  setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, &iprint,evaluate);
   return 0;
 } /* MAIN__ */
 

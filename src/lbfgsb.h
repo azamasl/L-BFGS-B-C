@@ -232,9 +232,7 @@ extern  int dcopy(integer *, double *, integer *,
 #define setulb FORTRAN_WRAPPER(setulb)
 extern int setulb(integer *n, integer *m, double *x, 
 	double *l, double *u, integer *nbd, double *f, double 
-	*g, double *factr, double *pgtol, double *wa, integer *
-	iwa, integer *task, integer *iprint, integer *csave, logical *lsave, 
-	integer *isave, double *dsave,
+	*g, double *factr, double *pgtol, integer *iprint,
     double      (*valgrad) (double *, double *, integer) /* f = valgrad (g,x,n)*/
     );
 

@@ -239,19 +239,9 @@ int main(void)
     static integer i;
     static double l[1024];
     static integer m, n;
-    static double u[1024], x[1024], t1, t2, wa[43251];
-    static integer nbd[1024], iwa[3072];
-/*     static char task[60]; */
-    static integer taskValue;
-    static integer *task=&taskValue; /* must initialize !! */
-/*      http://stackoverflow.com/a/11278093/269192 */
+    static double u[1024], x[1024], t1, t2;
+    static integer nbd[1024];
     static double factr;
-/*     static char csave[60]; */
-    static integer csaveValue;
-    static integer *csave=&csaveValue;
-    static double dsave[29];
-    static integer isave[44];
-    static logical lsave[4];
     static double pgtol;
     static integer iprint;
 
@@ -306,23 +296,8 @@ int main(void)
     printf("     Solving sample problem (Rosenbrock test fcn).\n");
     printf("      (f = 0.0 at the optimal solution.)\n");
 
-    /*     We start the iteration by initializing task. */
+    setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, &iprint, evaluate);
 
-    *task = (integer)START;
-/*     s_copy(task, "START", (ftnlen)60, (ftnlen)5); */
-    /*        ------- the beginning of the loop ---------- */
-   // L111:
-    /*     This is the call to the L-BFGS-B code. */
-    setulb(&n, &m, x, l, u, nbd, &f, g, &factr, &pgtol, wa, iwa, task, &iprint, csave, lsave, isave, dsave, evaluate);
-
-//    if ( IS_FG(*task) ) {
-//        f = evaluate(g, x , n);
-//        goto L111;
-//    }
-//
-//    if ( *task==NEW_X ) {
-//        goto L111;
-//    }
     return 0;
 } /* MAIN__ */
 
